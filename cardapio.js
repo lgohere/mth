@@ -1,0 +1,3 @@
+function getCardapio() {
+  return [];
+}

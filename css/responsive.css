@@ -1,0 +1,247 @@
+/* only small desktops */
+/* tablets */
+/* only small tablets */
+@media only screen and (min-width: 992px) and (max-width: 1180px) {
+  .footer-area h3 {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 520px) {
+  .all-page-title h1 {
+    font-size: 45px;
+    color: #ffffff;
+    font-family: "Arbutus Slab", serif;
+    padding: 0px;
+  }
+
+  .qt-background p {
+    font-size: 35px;
+    line-height: 4rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .navbar-light .navbar-brand {
+    margin-left: 15px;
+  }
+  .navbar-light .navbar-toggler {
+    margin-right: 15px;
+    border-radius: 0px;
+  }
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+    box-shadow: none;
+  }
+  .carousel-control-prev {
+    left: -60px;
+  }
+  .carousel-control-next {
+    right: -60px;
+  }
+  .why-text h4 {
+    font-size: 18px;
+  }
+  .why-text p {
+    margin: 0px;
+  }
+
+  .qt-background p {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 420px) {
+  .cover-slides p {
+    font-size: 18px;
+    padding: 5px 35px;
+  }
+}
+
+@media (min-width: 420px) {
+  .cover-slides p {
+    font-size: 22px;
+    padding: 5px 35px;
+  }
+}
+
+@media (min-width: 600px) {
+  .modal-content {
+    margin: 10% auto;
+    width: 50vh;
+  }
+
+  .btnCentoMeioCento {
+    font-size: 13px;
+    width: 6rem;
+  }
+}
+
+/* mobile or only mobile */
+@media (max-width: 767px) {
+  #reviews .carousel-inner .carousel-item p {
+    padding: 2rem 2.2rem;
+  }
+
+  .navbar-light .navbar-brand {
+    margin-left: 15px;
+  }
+  .navbar-light .navbar-toggler {
+    margin-right: 15px;
+    border-radius: 0px;
+  }
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+    box-shadow: none;
+  }
+  .cover-slides h1 {
+    font-size: 35px;
+  }
+
+  .slides-navigation a {
+    height: 42px;
+    width: 38px;
+    line-height: 33px;
+  }
+  .inner-column {
+    margin: 5vh 2vh;
+  }
+
+  .inner-column h1 {
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .filter-button-group {
+    margin: 10px 0px;
+  }
+
+  .contact-imfo-box .col-md-4 {
+    margin-bottom: 15px;
+  }
+  .carousel-control-prev {
+    left: 0px;
+  }
+  .carousel-control-next {
+    right: 0px;
+  }
+  .blog-box-inner .blog-detail {
+    overflow: hidden;
+  }
+  .blog-sidebar {
+    margin-top: 50px;
+  }
+
+  .footer-area {
+    padding-top: 50px;
+    padding-bottom: 0px;
+  }
+  .bg-f {
+    background-image: url("../images/novas-imgs/docinhos.jpg");
+    background-attachment: scroll;
+    background-clip: initial;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: initial;
+    background-position: -40vh -10vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .menu-box .heading-title h2 {
+    font-size: 25px;
+    padding: 2vh 2vh;
+  }
+
+  .menu-box .heading-title p {
+    padding-top: 1.5vh;
+  }
+}
+
+@media only screen and (min-width: 280px) and (max-width: 599px) {
+  .why-text p {
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+}
+
+@media (min-width: 768px) {
+  .titleintro {
+    padding-top: 15vh;
+    max-width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+  }
+
+  #reviews .carousel-inner .carousel-item p {
+    padding: 2rem 1.5rem;
+  }
+
+  .cover-slides p {
+    font-size: 25px;
+    padding: 5px 11vh;
+  }
+
+  .pricing-price {
+    height: 150px;
+    width: 150px;
+  }
+
+  .fundo-salgadosedoces h1 {
+    font-size: 40px;
+  }
+
+  .pricing-cost {
+    display: flex;
+    font-size: 45px;
+    justify-content: center;
+  }
+
+  .heading-title h2 {
+    font-size: 30px;
+  }
+
+  #listaProdutos .img-fluid {
+    width: 20vh;
+  }
+}
+
+@media (min-width: 992px) {
+  #reviews .carousel-inner .carousel-item p {
+    padding: 2rem 3.8rem;
+  }
+  #reviews .carousel-inner {
+    height: 30rem;
+  }
+
+  .menu-box .heading-title h2 {
+    padding: 2vh 10rem;
+  }
+
+  .fundo-salgadosedoces h1 {
+    font-size: 50px;
+  }
+
+  .qt-background p {
+    font-size: 45px;
+    line-height: 4rem;
+  }
+
+  #seleciones {
+    max-width: 80vh;
+  }
+}
+
+@media (min-width: 1240px) {
+  #reviews .carousel-inner .carousel-item p {
+    padding: 2rem 4.5rem;
+  }
+
+  .fundo-salgadosedoces h1 {
+    font-size: 60px;
+  }
+
+  .heading-title h2 {
+    font-size: 36px;
+  }
+}

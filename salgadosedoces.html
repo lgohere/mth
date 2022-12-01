@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Basic -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Site Metas -->
+    <title>MTH Bolos e Salgados</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div id="app">
+      <header class="top-navbar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">
+              <img
+                src="./images/novas-imgs/mth-icon-sm.png"
+                alt=""
+                width="125"
+                style="filter: drop-shadow(1px 1.5px 0.3px #b49fccff)"
+              />
+            </a>
+            <div
+              class="cart"
+              id="modalCarrinhoBtn"
+              @click="finalizacao = false"
+            >
+              <i class="bi bi-cart2"></i>
+              <div class="cartAmount">
+                <p id="carrinhoBtnQtd">{{ carrinho.length }}</p>
+              </div>
+            </div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbars-rs-food"
+              aria-controls="navbars-rs-food"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbars-rs-food">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html#go-to-about"
+                    >Quem somos Nós</a
+                  >
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="salgadosedoces.html"
+                    >Bolos e Salgados</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://wa.me/5513981248187"
+                    >Contato</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Modal Carrinho -->
+      <!-- The Modal -->
+      <div id="modalCarrinho" @click="!finalizacao" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" v-if="!finalizacao">
+          <div class="row">
+            <div
+              class="col-12 d-inline-flex flex-row justify-content-between align-items-center"
+            >
+              <h1>{{ carrinhoMessage }}</h1>
+              <span class="closeModalCarrinho" @click="fecharCarrinho"
+                ><i class="bi bi-x-circle"> </i
+              ></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div
+              v-if="carrinho.length > 0"
+              v-for="item in carrinho"
+              :key="item.id"
+              class="col-12"
+            >
+              <div
+                class="row shadow-item mb-2"
+                style="border: solid rgba(0, 0, 0, 0.075) 1px"
+              >
+                <div class="col-4 pt-3 d-flex flex-column align-items-center">
+                  <img
+                    :src="item.image"
+                    class="img-fluid border border-success"
+                  />
+                  <div>
+                    <p class="text-center mt-3" style="line-height: 20px">
+                      {{ item.name }}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  v-if="item.id >= 50"
+                  class="col-4 text-center pt-3 card-text"
+                >
+                  <div class="pb-2"><strong>Quantidade</strong></div>
+                  <div
+                    class="col-12 d-inline-flex align-items-center justify-content-center"
+                  >
+                    <button @click="subtraiQtd(item)">-</button>
+                    <h3 class="mx-3">{{ item.qtd }}</h3>
+                    <button @click="somaQtd(item)">+</button>
+                  </div>
+                </div>
+                <div
+                  
+                  class="col-4 text-center pt-3 card-text"
+                >
+                  <div class="pb-2"><strong>Quantidade</strong></div>
+                  <div
+                    class="col-12 d-inline-flex align-items-center justify-content-center"
+                  >
+                    <button @click="subtraiQtd(item)">-</button>
+                    <h3 class="mx-3">{{ item.qtd }}</h3>
+                    <button @click="somaQtd(item)">+</button>
+                  </div>
+                  <p>(Pronto)</p>
+                  <div
+                    v-if="item.id <= 10"
+                    class="col-12 d-inline-flex align-items-center justify-content-center"
+                  >
+                    <button @click="subtraiQtdCongelado(item)">-</button>
+                    <h3 class="mx-3">{{ item.congelado }}</h3>
+                    <button @click="somaQtdCongelado(item)">+</button>
+                  </div>
+                  <p v-if="item.id <= 10">(Congelado)</p>
+                </div>
+
+                <div v-if="item.id < 50" class="col-4 text-center pt-3">
+                  <strong>Subtotal</strong>
+                  <p class="pt-2">
+                    R$ {{ item.subtotal + item.subtotalCongelado }},00
+                  </p>
+                  <i
+                    v-if="item.id < 50"
+                    @click="lixeiraCarrinho(item)"
+                    class="pt-4 bi bi-trash3-fill"
+                    style="font-size: 20px"
+                  ></i>
+                </div>
+
+                <div v-if="item.id >= 50" class="col-4 text-center pt-3">
+                  <strong>Subtotal</strong>
+                  <p class="pt-2">R$ {{ item.subtotal }},00</p>
+                </div>
+
+                <div class="col-12">{{ item.formato }}</div>
+                <div v-if="item.massa" class="col-10">
+                  Massa: {{ item.massa }}
+                </div>
+                <div v-if="item.tipoRecheio" class="col-10">
+                  Recheio(s): {{ item.recheio }}
+                  <span v-if="item.recheioPlus">| {{item.recheioPlus}}</span>
+                </div>
+                <div v-if="item.recheioFruta" class="col-10">
+                  Fruta: {{ item.recheioFruta }}
+                </div>
+                <div
+                  class="col-2 py-2 d-flex justify-content-center align-items-center"
+                >
+                  <i
+                    v-if="item.id >= 50"
+                    @click="lixeiraCarrinho(item)"
+                    class="bi bi-trash3-fill"
+                    style="font-size: 20px"
+                  ></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOLO NO CARRINHO -->
+            <div
+              v-for="item in carrinho"
+              v-if="item.formato in carrinho"
+              :key="item.id"
+              class="col-12"
+            >
+              <div
+                class="row shadow-item mb-2"
+                style="border: solid rgba(0, 0, 0, 0.075) 1px"
+              >
+                <div class="col-4 pt-3 d-flex flex-column align-items-center">
+                  <img
+                    :src="pedidoBolo.image"
+                    class="img-fluid border border-success"
+                  />
+                  <div>
+                    <p class="text-center mt-3" style="line-height: 20px">
+                      {{ item.formato }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4 text-center pt-3 card-text">
+                  <div class="pb-2"><strong>Quantidade</strong></div>
+                  <div
+                    class="col-12 d-inline-flex align-items-center justify-content-center"
+                  >
+                    <button @click="subtraiQtd(item)">-</button>
+                    <h3 class="mx-3">{{ item.qtd }}</h3>
+                    <button @click="somaQtd(item)">+</button>
+                  </div>
+                </div>
+
+                <div class="col-4 text-center pt-3">
+                  <strong>Subtotal</strong>
+                  <p class="pt-2">R$ {{ item.subtotal }},00</p>
+                  <i
+                    @click="lixeiraCarrinho(item)"
+                    class="pt-4 bi bi-trash3-fill"
+                    style="font-size: 20px"
+                  ></i>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="totalCarrinho"
+              class="col-12 d-flex flex-column align-items-center"
+            >
+              <div>Quantidade de Items: {{ carrinho.length }}</div>
+              <div>Total: R${{ totalDoCarrinho }},00</div>
+            </div>
+            <div class="col-12 btn-total">
+              <button
+                v-if="carrinho.length > 0"
+                class="btn"
+                @click="confirmarPedido"
+              >
+                Confirmar Pedido
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Data Input Section -->
+        <div class="modal-content" v-else>
+          <div class="row">
+            <div
+              class="col-12 d-inline-flex flex-row justify-content-between align-items-center"
+            >
+              <h1>Insira os dados para Entrega ou Retirada:</h1>
+              <span class="closeModalCarrinho" @click="fecharCarrinho"
+                ><i class="bi bi-x-circle"> </i
+              ></span>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div
+              id="totalCarrinho"
+              class="col-12 d-flex flex-column align-items-center"
+              style="padding-bottom: 10px; border-bottom: 1px solid #412234ff"
+            >
+              <div>
+                Items: {{ carrinho.length }} / Total: R${{ totalDoCarrinho }},00
+              </div>
+            </div>
+            <div>
+              <div
+                class="col-12 text-center d-flex flex-column align-items-center"
+              >
+                <form id="dadosPessoais">
+                  <label for="nome">Nome e Sobrenome:</label><br />
+                  <input
+                    type="input"
+                    id="nome"
+                    v-model="formData.nome"
+                    name="nome"
+                    required
+                    placeholder="Digite aqui seu nome e sobrenome."
+                  />
+                  <br />
+                  <label for="mobile">Whatsapp / Celular:</label><br />
+                  <input
+                    id="mobile"
+                    type="text"
+                    v-model="formData.mobile"
+                    required
+                    placeholder="(DD) XXXXX-XXXX"
+                    name="mobile"
+                  />
+                  <br />
+                  <!-- <div :class="{'checkboxForm' : true, 'retirada': !entrega}">
+                    <div v-if="entrega">
+                      <input
+                        type="checkbox"
+                        id="delivery"
+                        value="P/ Entrega"
+                        v-model="formData.delivery"
+                        @click="retirada = !retirada"
+                      />
+                      <label for="entrega"> Incluir Entrega (R$20,00) </label>
+                    </div>
+                    <div v-if="retirada">
+                      <input
+                        type="checkbox"
+                        id="delivery"
+                        value="P/ Retirada"
+                        v-model="formData.delivery"
+                        @click="entrega = !entrega"
+                      />
+                      <label for="retirada"> Retirar no Local</label>
+                    </div>
+                  </div> -->
+                  <label for="delivery">Para Entrega ou Retirada?</label><br />
+                  <select v-model="formData.delivery">
+                    <option v-for="opcao in delivery">{{ opcao }}</option>
+                  </select>
+                  <div v-if="formData.delivery.length > 0">
+                    <label for="delivery">{{ entregaOuRetirada }}</label><br />
+                    <input
+                      v-if="formData.delivery == delivery.sim"
+                      id="endereco"
+                      type="text"
+                      v-model="formData.endereco"
+                      placeholder="Rua / nº Casa ou Prédio / nº Apt."
+                    />
+                    <label
+                      v-if="formData.delivery == delivery.nao"
+                      for="endereco"
+                      >Rua Pastor Alberto Augusto nº 126, Santos/SP.</label
+                    >
+                    <br />
+                    <label
+                      v-if="formData.delivery == delivery.sim"
+                      for="dataPedido"
+                      >Data para Entrega:</label
+                    >
+                    <label
+                      v-if="formData.delivery == delivery.nao"
+                      for="dataPedido"
+                      >Data para Retirada:</label
+                    >
+                    <br />
+                    <input
+                      id="dataPedido"
+                      type="date"
+                      v-model="formData.dataPedido"
+                    /><br />
+
+                    <label for="periodo"
+                      >Periodo para Entrega / Retirada:</label
+                    >
+                    <br />
+                    <select v-model="formData.periodo">
+                      <option>Manhã (10 as 12hrs)</option>
+                      <option>Tarde (14 as 18hrs)</option>
+                      <option>Noite (18 as 22:30hrs)</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-12 mt-4 btn-totalEnd">
+              <button class="btn btn-danger" @click="voltarCarrinho">
+                Voltar
+              </button>
+              <button @click="finalizarPedido" class="btn btn-success mt-2">
+                Finalizar Pedido
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start All Pages -->
+      <div id="saledoc" class="fundo-salgadosedoces text-center">
+        <h1 style="z-index: 1">Bolos e Salgados</h1>
+      </div>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-12"></div>
+        </div>
+      </div>
+
+      <!-- Start Menu -->
+      <div class="menu-box">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 px-lg-5 text-center">
+              <div class="heading-title text-center">
+                <h2>
+                  As melhores opções para o seu evento você encontra aqui!
+                </h2>
+                <p>
+                  Confira as opções de Bolos e Salgados que temos para
+                  encomenda.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container mt-1" style="overflow-x: auto">
+        <div class="row justify-content-center">
+          <div class="col-6 col-lg-4" @click="abrirSalgados">
+            <h3
+              :class="{'h5': true,'p-4': true, 'text-center':true, 'border': true, 'shadow': true, 'btnSalgadoDoce': listaSalgados == true}"
+            >
+              SALGADOS
+            </h3>
+          </div>
+          <div class="col-6 col-lg-4" @click="abrirBolos">
+            <h3
+              :class="{'h5': true,'p-4': true, 'text-center':true, 'border': true, 'shadow': true,'btnSalgadoDoce': listaSalgados == false}"
+            >
+              BOLOS
+            </h3>
+          </div>
+        </div>
+        <div v-show="listaSalgados == true" class="col-12 py-2">
+          <div class="special-menu text-center">
+            <div class="button-group filter-button-group">
+              <button
+                @click="abrirFritos"
+                :class="{'active': listaFritos == true , '': listaFritos == false}"
+                style="box-shadow: none"
+                data-filter="#listaFritos"
+              >
+                Fritos
+              </button>
+              <button
+                @click="abrirAssados"
+                :class="{'active': listaAssados == true , '': listaAssados == false}"
+                style="box-shadow: none"
+                data-filter=".salgados"
+              >
+                Assados
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-show="listaSalgados == false" class="col-12 py-2"></div>
+      </div>
+      <!-- ************ LISTA DE SALGADOS ************-->
+      <!-- ************ LISTA DE FRITOS ************-->
+      <div class="row mx-0 d-flex justify-content-center">
+        <div
+          v-show="listaFritos == true"
+          class="col-12 col-sm-8 col-md-6 col-lg-6 swing-in-left-bck"
+        >
+          <div
+            class="col-12 py-lg-2"
+            v-for="salgado in fritos"
+            :key="salgado.id"
+          >
+            <div
+              :class="{'row': true, 'shadow': true, 'box-items': true, 'carrinho-item-borda--adicionado': salgado.qtd > 0 || salgado.congelado > 0, 
+                '!carrinho-item-borda--adicionado': salgado.qtd == 0 && salgado.congelado == 0 }"
+            >
+              <div
+                class="col-5 py-2 d-flex flex-column justify-content-center align-items-center"
+              >
+                <img :src="salgado.image" class="img-fluid" />
+                <span class="text-center">50 Unidades</span>
+              </div>
+              <div class="col-7 pt-3 d-flex justify-content-around flex-column">
+                <h3 id="salgado-item--name" style="text-align: start">
+                  <strong>{{ salgado.name }}</strong>
+                </h3>
+                <p id="salgado-item--desc" style="text-align: start">
+                  {{ salgado.desc }}
+                </p>
+                <p id="salgado-item--desc" style="text-align: start">   
+                  <ul>
+                    <li>Congelados: &nbsp&nbsp&nbspR$ 25,00</li>
+                    <li>50 Unidades: &nbspR$ 29,00</li>
+                  </ul>
+                </p>
+                <p
+                  id="salgado-item--price"
+                  class="d-flex flex-row-reverse"
+                  style="font-size: 18pt"
+                >
+                  <strong>R${{ salgado.price }},00</strong>
+                </p>
+                <div id="adicionarAoCarrinho" class="mb-3">
+                  <button
+                    @click="adicionarAoCarrinho(salgado)"
+                    class="btn-block m-auto p-2 botao-carrinho"
+                    :produtoId="salgado.id"
+                  >
+                    Adicionar ao Carrinho <i class="bi bi-cart-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ************ FIM LISTA DE FRITOS ************-->
+        <!-- ************ LISTA DE ASSADOS ************-->
+        <div
+          v-show="listaAssados == true"
+          class="col-12 col-sm-8 col-md-6 col-lg-6 swing-in-right-bck"
+        >
+          <div
+            class="col-12 py-lg-2"
+            v-for="assado in assados"
+            :key="assado.id"
+          >
+            <div
+              :class="{'row': true, 'shadow': true, 'box-items': true, 'carrinho-item-borda--adicionado': assado.qtd > 0 || assado.congelado > 0, 
+            '!carrinho-item-borda--adicionado': assado.qtd == 0 && assado.congelado == 0 }"
+            >
+              <div
+                class="col-5 py-2 d-flex flex-column justify-content-center align-items-center"
+              >
+                <img :src="assado.image" class="img-fluid" />
+                <span class="text-center">50 Unidades</span>
+              </div>
+              <div class="col-7 pt-3 d-flex justify-content-around flex-column">
+                <h3 id="assado-item--name" style="text-align: start">
+                  <strong>{{ assado.name }}</strong>
+                </h3>
+                <p id="assado-item--desc" style="text-align: start">
+                  {{ assado.desc }}
+                </p>
+                <p id="assado-item--desc" style="text-align: start">
+
+                </p>
+                <p
+                  id="assado-item--price"
+                  class="d-flex flex-row-reverse"
+                  style="font-size: 18pt"
+                >
+                  <strong>R${{ assado.price }},00</strong>
+                </p>
+                <div id="adicionarAoCarrinho" class="mb-3">
+                  <button
+                    @click="adicionarAoCarrinho(assado)"
+                    class="btn-block m-auto p-2 botao-carrinho"
+                    :produtoId="assado.id"
+                  >
+                    Adicionar ao Carrinho <i class="bi bi-cart-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ************ FIM LISTA DE ASSADOS ************-->
+        <div id="areaBolos" v-show="listaBolos == true" class="bolosbackground">
+          <div class="row">
+            <div
+              id="seleciones"
+              class="col-12 col-md-8 col-lg-10 text-center shadow box-items p-4"
+            >
+              <img
+                src="./images/novas-imgs/cartazBolos.jpeg"
+                alt="Flyer Bolos"
+                class="img-fluid"
+              />
+              <a
+                href="https://wa.me/5513981258187?text=Olá!%20Gostaria%20de%20encomendar%20um%20*Bolo%20de%20Festa*!%20"
+              >
+                <button class="btn shadow mt-3 heartbeat">
+                  CLIQUE AQUI PARA ENCOMENDAR!
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start Contact info -->
+    <div class="contact-imfo-box">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <i class="fa fa-volume-control-phone"></i>
+            <div class="overflow-hidden">
+              <h4>Telefone</h4>
+              <p class="lead">13 99688-4055</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <i class="fa fa-envelope"></i>
+            <div class="overflow-hidden">
+              <h4>Email</h4>
+              <p class="lead">mthbolosesalgados@gmail.com</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <i class="fa fa-map-marker"></i>
+            <div class="overflow-hidden">
+              <h4>Localização</h4>
+              <p class="lead">
+                Rua Pastor Alberto Augusto <br />
+                nº 126, Santos / SP
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Contact info -->
+
+    <!-- Start Footer -->
+    <footer class="footer-area bg-f">
+      <div class="container mb-5">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 pt-3">
+            <h3>Horários para Solicitação de Encomendas</h3>
+            <p><span class="text-color">Segunda-Sábado: </span>08:00 - 18:00</p>
+            <p><span class="text-color">Domingo: </span>Fechado</p>
+          </div>
+          <div class="col-lg-6 col-md-6 pt-3">
+            <h3>Horários para Entrega ou Retirada de Encomenda</h3>
+            <p><span class="text-color">Segunda-Sábado: </span>10:00 - 22:30</p>
+            <p><span class="text-color">Domingo: </span>A depender</p>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12">
+              <p class="company-name">
+                Todos os direitos reservados. &copy; 2022
+                <a href="#">MTH Bolos e Salgados. CNPJ: 48.503.459/0001-34</a>
+                <br />Desenvolvido por:
+                <a
+                  style="color: #412234ff"
+                  href="https://lgohere.github.io/mybusinesscard/"
+                  >LGO!</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none"
+      >&uarr;</a
+    >
+
+    <!-- ALL JS FILES -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- ALL PLUGINS -->
+    <script src="js/jquery.superslides.min.js"></script>
+    <script src="js/images-loded.min.js"></script>
+    <script src="js/isotope.min.js"></script>
+    <script src="js/baguetteBox.min.js"></script>
+    <script src="js/form-validator.min.js"></script>
+    <script src="js/contact-form-script.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
